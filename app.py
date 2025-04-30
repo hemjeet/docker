@@ -6,7 +6,7 @@ from sklearn.datasets import load_iris
 model = joblib.load('iris_model.joblib')
 iris = load_iris()
 
-st.title("🌼 Iris Flower Classifier (and this is new version)")
+st.title("🌼 Iris Flower Classifier (an this is cloud based)")
 st.write("Predict iris flower type based on measurements")
 
 # Input sliders
