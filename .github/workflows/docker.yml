@@ -1,8 +1,9 @@
 name: Docker CI
+
 on:
   push:
     branches:
-      - cloud-run  # Note the hyphen and proper YAML list syntax
+      - cloud-run
 
 jobs:
   build-and-push:
@@ -18,3 +19,18 @@ jobs:
 
       - name: Push to Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/iris-classifier:v3
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy iris-classifier \
+            --image docker.io/${{ secrets.DOCKER_USERNAME }}/iris-classifier:v3 \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated
