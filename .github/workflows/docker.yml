@@ -2,7 +2,7 @@ name: Docker CI
 on:
   push:
     branches:
-      - master  # Note the hyphen and proper YAML list syntax
+      - cloud-run  # Note the hyphen and proper YAML list syntax
 
 jobs:
   build-and-push:
